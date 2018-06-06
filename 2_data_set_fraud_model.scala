@@ -1,0 +1,1 @@
+val sql_lz = "select * from proceso_seguridad_externa.scoring_variables_preferenciales order by documento"
