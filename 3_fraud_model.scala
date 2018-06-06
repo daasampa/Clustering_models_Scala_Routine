@@ -1,3 +1,19 @@
+/*Using the object-oriented capabilities available in the Scala language the next object (gmm_model) performs all calculations that
+responds the question: is possible that a probabilistic clustering model predicts the fraud event?.
+The gmm_model object contains 4 simple methods, each one workm as te following:
+	1. The call_data uses the previous load of the SQL sentence in 2.data_set_model.scala to create an object of
+	   org.apache.spark.sql.DataFrame type that brings the feature data set.
+	2. Being quite original a lambda method is defined to perform a quiality test for the features imported. It checks the amount
+	   of zeros each feature has, this is a useful information to decide whichs features would selected as the input to the
+	   EM algorithm.
+	3. The main method, the kernel, gmm (Gaussian mixture moddel) performs the usual steps fitting an analytical method within the
+	   pipeline stages framework. Assembler, scaler are input data transformations required, then the pipeline gathers them beside
+	   the mixture and does the magic taking the estimationData set. Finally the model object shows up and makes the transformation
+	   of the prediction data set (estimationData_model).
+	   Before the final result is written on HDFS a function to calculate the maximum probability is applied to create a new column
+	   "maximum_probability", as its name suggests, returns the max value of the probability vector. These are the cluster
+	   probabilities.
+	   In the final part the API drops and create tables of results, these are quite similar to those in the supervised methods.*/
 object gmm_model {
 def call_data(sql: String) : org.apache.spark.sql.DataFrame = {
 val data = spark.sql(sql)
